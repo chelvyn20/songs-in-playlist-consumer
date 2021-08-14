@@ -17,11 +17,11 @@ class MailSender {
     const message = {
       from: 'Open Music App',
       to: targetEmail,
-      subject: 'Export Playlist',
-      text: 'The attachment is exported from Open Music App Playlist',
+      subject: 'Export songs from playlist',
+      text: 'The attachment is exported from Open Music App playlist',
       attachments: [
         {
-          filename: 'playlists.json',
+          filename: 'songInPlaylist.json',
           content,
         },
       ],

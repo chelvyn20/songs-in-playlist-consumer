@@ -1,6 +1,6 @@
 class Listener {
-  constructor(playlistsService, mailSender) {
-    this._playlistsService = playlistsService;
+  constructor(songsInPlaylistService, mailSender) {
+    this._songsInPlaylistService = songsInPlaylistService;
     this._mailSender = mailSender;
 
     this.listen = this.listen.bind(this);
@@ -8,10 +8,10 @@ class Listener {
 
   async listen(message) {
     try {
-      const { userId, targetEmail } = JSON.parse(message.content.toString());
+      const { playlistId, targetEmail } = JSON.parse(message.content.toString());
+      const songsInPlaylist = await this._songsInPlaylistService.getSongsInPlaylist(playlistId);
 
-      const playlists = await this._playlistsService.getPlaylists(userId);
-      const result = await this._mailSender.sendEmail(targetEmail, JSON.stringify(playlists));
+      const result = await this._mailSender.sendEmail(targetEmail, JSON.stringify(songsInPlaylist));
       console.log(result);
     } catch (error) {
       console.error(error);
